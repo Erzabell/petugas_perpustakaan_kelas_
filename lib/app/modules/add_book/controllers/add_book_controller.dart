@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:petugas_perpustakaan_kelas_c/app/data/provider/storage_provider.dart';
 import 'package:petugas_perpustakaan_kelas_c/app/modules/book/controllers/book_controller.dart';
 import '../../../data/constant/endpoint.dart';
 import '../../../data/provider/api_provider.dart';
+import '../../../routes/app_pages.dart';
 
 class AddBookController extends GetxController {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
@@ -45,7 +47,8 @@ class AddBookController extends GetxController {
             }
             );
     if( response.statusCode == 201) {
-    Get.back();
+      await StorageProvider.write(StorageKey.status,'sucses');Get.offAllNamed(Routes.BOOK);
+      Get.snackbar("berhasil", "buku telah disimpan", backgroundColor: Colors.orange);
     } else {
     Get.snackbar("sorry", "Login Gagal", backgroundColor: Colors.orange);
     }
