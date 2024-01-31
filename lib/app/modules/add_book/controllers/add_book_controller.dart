@@ -14,9 +14,9 @@ class AddBookController extends GetxController {
   final TextEditingController penulisController = TextEditingController();
   final TextEditingController penerbitController = TextEditingController();
   final TextEditingController tahun_terbitController = TextEditingController();
-
   final loading = false.obs;
   final count = 0.obs;
+  final BookController _bookController = Get.find();
 
   @override
   void onInit() {
@@ -47,8 +47,10 @@ class AddBookController extends GetxController {
             }
             );
     if( response.statusCode == 201) {
-      await StorageProvider.write(StorageKey.status,'sucses');Get.offAllNamed(Routes.BOOK);
-      Get.snackbar("berhasil", "buku telah disimpan", backgroundColor: Colors.orange);
+      _bookController.getData();
+      Get.back();
+      //await StorageProvider.write(StorageKey.status,'sucses');Get.offAllNamed(Routes.BOOK);
+      //Get.snackbar("berhasil", "buku telah disimpan", backgroundColor: Colors.orange);
     } else {
     Get.snackbar("sorry", "Login Gagal", backgroundColor: Colors.orange);
     }
